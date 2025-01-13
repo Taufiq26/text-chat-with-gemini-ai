@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini AI Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .heading {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            flex: 1;
+            padding: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .response {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1 class="heading">Conversational Chat with Gemini AI</h1>
+        <div class="input-area">
+            <input type="text" id="questionInput" placeholder="Enter your question">
+            <button onclick="askQuestion()">Ask</button>
+        </div>
+        <div id="responseArea"></div>
+    </div>
+
+    <script>
+        const API_KEY = 'your-gemini-api-key'; // Replace with your actual API key
+        const API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
+
+        async function askQuestion() {
+            const question = document.getElementById('questionInput').value;
+            if (!question) return;
+
+            try {
+                const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: question
+                            }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                const answer = data.candidates[0].content.parts[0].text;
+
+                const chatDiv = document.createElement('div');
+                chatDiv.className = 'response';
+                
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.textContent = 'Q: ' + question;
+                
+                const answerDiv = document.createElement('div');
+                answerDiv.textContent = 'A: ' + answer;
+                
+                chatDiv.appendChild(questionDiv);
+                chatDiv.appendChild(answerDiv);
+                document.getElementById('responseArea').prepend(chatDiv);
+                document.getElementById('questionInput').value = '';
+
+            } catch (error) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'response';
+                errorDiv.style.color = 'red';
+                errorDiv.textContent = 'Error: ' + error.message;
+                document.getElementById('responseArea').prepend(errorDiv);
+            }
+        }
+
+        // Enter key support
+        document.getElementById('questionInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') askQuestion();
+        });
+    </script>
+</body>
+</html>

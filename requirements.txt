@@ -1,0 +1,6 @@
+requests
+python-dotenv
+unittest2
+google-generativeai
+ipython
+absl-py
