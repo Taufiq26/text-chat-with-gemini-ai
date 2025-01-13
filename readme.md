@@ -8,6 +8,9 @@
 ## Run app
 > python -W ignore app.py
 
+## Docs
+https://ai.google.dev/gemini-api/docs/text-generation?hl=id
+
 # Gemini Model
 ```
 models/gemini-1.0-pro-latest
