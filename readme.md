@@ -10,6 +10,18 @@
 
 ## Docs
 https://ai.google.dev/gemini-api/docs/text-generation?hl=id
+### Limitations: Gemini 1.5 Flash (Free of charge)
+The Gemini API “free tier” is offered through the API service with lower rate limits for testing purposes. Google AI Studio usage is completely free in all available [countries](https://ai.google.dev/gemini-api/docs/available-regions).
+- Rate limits:
+    - 15 RPM (requests per minute)
+    - 1 million TPM (tokens per minute)
+    - 1,500 RPD (requests per day)
+- Input pricing: Free of charge
+- Output pricing: Free of charge
+- Context caching: Free of charge, up to 1 million tokens of storage per hour
+- Tuning price: Input/output prices are the same for tuned models. Tuning service is free of charge.
+- Grounding with Google Search: Not available
+- Used to improve our (Google) products: [Yes](https://ai.google.dev/gemini-api/terms)
 
 # Gemini Model
 ```
