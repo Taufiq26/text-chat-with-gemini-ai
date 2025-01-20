@@ -46,21 +46,52 @@
             margin-bottom: 10px;
             color: #007bff;
         }
+        .api-key-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        #chatInterface {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="chat-container">
         <h1 class="heading">Conversational Chat with Gemini AI</h1>
-        <div class="input-area">
-            <input type="text" id="questionInput" placeholder="Enter your question">
-            <button onclick="askQuestion()">Ask</button>
+        
+        <!-- API key input section -->
+        <div id="apiKeySection" class="api-key-container">
+            <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API key">
+            <button onclick="saveApiKey()">Save Key</button>
         </div>
-        <div id="responseArea"></div>
+
+        <!-- Chat interface -->
+        <div id="chatInterface">
+            <div class="input-area">
+                <input type="text" id="questionInput" placeholder="Enter your question">
+                <button onclick="askQuestion()">Ask</button>
+            </div>
+            <div id="responseArea"></div>
+        </div>
     </div>
 
     <script>
-        const API_KEY = 'your-gemini-api-key'; // Replace with your actual API key
+        let API_KEY = '';
         const API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
+
+        function saveApiKey() {
+            const apiKeyInput = document.getElementById('apiKeyInput');
+            API_KEY = apiKeyInput.value;
+            
+            if (API_KEY) {
+                document.getElementById('apiKeySection').classList.add('hidden');
+                document.getElementById('chatInterface').style.display = 'block';
+            }
+        }
 
         async function askQuestion() {
             const question = document.getElementById('questionInput').value;
